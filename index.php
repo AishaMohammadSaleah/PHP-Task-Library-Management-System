@@ -4,11 +4,7 @@ require_once __DIR__ . '/models/Book.php';
 require_once __DIR__ . '/models/Member.php';
 require_once __DIR__ . '/models/Library.php';
 
-/**
- * Runs a single test and prints the result.
- * $expectError = true  -> the callable SHOULD throw an exception
- * $expectError = false -> the callable should complete normally
- */
+
 function runTest(string $name, callable $test, bool $expectError = true): void
 {
     try {
