@@ -8,6 +8,49 @@ class Library
     private array $books = [];
     /** @var Member[] */
     private array $members = [];
+    private string $filePath;
+    public function __construct(string $filePath = __DIR__ . '/../data.json')
+{
+    $this->filePath = $filePath;
+}
+public function save(): void
+{
+    $data = [
+        'books'   => array_map(fn(Book $b) => $b->toArray(), $this->books),
+        'members' => array_map(fn(Member $m) => $m->toArray(), $this->members),
+    ];
+
+    $json = json_encode($data, JSON_PRETTY_PRINT);
+    if ($json === false || file_put_contents($this->filePath, $json) === false) {
+        throw new Exception("Failed to save library data.");
+    }
+}
+public function load(): void
+{
+    if (!file_exists($this->filePath)) {
+        return; 
+    }
+
+    $data = json_decode(file_get_contents($this->filePath), true);
+    if (!is_array($data)) {
+        throw new Exception("Library data file is corrupted.");
+    }
+
+    $this->books = [];
+    $this->members = [];
+
+    foreach ($data['books'] ?? [] as $bookData) {
+        $this->books[] = Book::fromArray($bookData);
+    }
+
+    foreach ($data['members'] ?? [] as $memberData) {
+        $member = Member::fromArray($memberData);
+        foreach ($memberData['borrowedBookIds'] ?? [] as $bookId) {
+            $member->restoreBorrowedBook($this->findBookById($bookId));
+        }
+        $this->members[] = $member;
+    }
+}
     private function findOne(array $items, callable $filter): ?object
     {
         foreach ($items as $item) {
@@ -125,4 +168,14 @@ class Library
     {
         $this->displayBooks($this->getBorrowedBooks());
     }
+    public function getBooks(): array
+{
+    return $this->books;
+}
+
+/** @return Member[] */
+public function getMembers(): array
+{
+    return $this->members;
+}
 }

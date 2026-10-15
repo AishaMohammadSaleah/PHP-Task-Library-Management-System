@@ -63,4 +63,31 @@ class Member
     {
         return $this->borrowedBooks;
     }
+        public function restoreBorrowedBook(Book $book): void
+    {
+        $this->borrowedBooks[] = $book;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id'              => $this->id,
+            'name'            => $this->name,
+            'email'           => $this->email,
+            'borrowedBookIds' => array_map(
+                fn(Book $b) => $b->getId(),
+                $this->borrowedBooks
+            ),
+        ];
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            $data['id'],
+            $data['name'],
+            $data['email']
+        );
+    }
+
 }

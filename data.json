@@ -1,0 +1,28 @@
+{
+    "books": [
+        {
+            "id": "B1",
+            "title": "clean code",
+            "author": "aisha saleh",
+            "category": "code",
+            "publishYear": 2002,
+            "isAvailable": true
+        },
+        {
+            "id": "12",
+            "title": "clean code",
+            "author": "aisha saleh",
+            "category": "code",
+            "publishYear": 2002,
+            "isAvailable": true
+        }
+    ],
+    "members": [
+        {
+            "id": "M1",
+            "name": "Soso",
+            "email": "as.sa@gmail.com",
+            "borrowedBookIds": []
+        }
+    ]
+}

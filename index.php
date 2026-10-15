@@ -27,6 +27,8 @@ $book1 = new Book("B1", "Clean Code", "Robert C. Martin", "Software", 2008);
 $book2 = new Book("B2", "Design Patterns", "Erich Gamma", "Software", 1994);
 $book3 = new Book("0", "The Pragmatic Programmer", "Andy Hunt", "Software", 1999);
 
+var_dump($book3->toArray());
+
 runTest("Add book 1", fn() => $library->addBook($book1), false);
 runTest("Add book 2", fn() => $library->addBook($book2), false);
 runTest("Add book with id '0'", fn() => $library->addBook($book3), false);

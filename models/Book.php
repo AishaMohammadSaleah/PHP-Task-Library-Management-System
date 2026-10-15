@@ -83,4 +83,26 @@ class Book
             'Publish Year: ' . $year . '<br>' .
             'Status: ' . $status . '<br>';
     }
+    public function toArray(): array
+{
+    return [
+        'id'          => $this->id,
+        'title'       => $this->title,
+        'author'      => $this->author,
+        'category'    => $this->category,
+        'publishYear' => $this->publishYear,
+        'isAvailable' => $this->isAvailable,
+    ];
+}
+ public  static function fromArray(array $data): self
+{
+    return new self(
+        $data['id'],
+        $data['title'],
+        $data['author'],
+        $data['category'],
+        $data['publishYear'],
+        $data['isAvailable']
+    );
+}
 }
